@@ -20,19 +20,6 @@ public class Main {
         MovieService movieService =
                 (MovieService) injector.getInstance(MovieService.class);
 
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
-
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
-
-        UserService userService =
-                (UserService) injector.getInstance(UserService.class);
-
-        OrderService orderService =
-                (OrderService) injector.getInstance(OrderService.class);
-
-        // Create movie
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription(
                 "An action film about street racing, heists, and spies."
@@ -43,7 +30,6 @@ public class Main {
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
-        // Create cinema halls
         CinemaHall firstCinemaHall = new CinemaHall();
         firstCinemaHall.setCapacity(100);
         firstCinemaHall.setDescription("first hall with capacity 100");
@@ -52,13 +38,15 @@ public class Main {
         secondCinemaHall.setCapacity(200);
         secondCinemaHall.setDescription("second hall with capacity 200");
 
+        CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
+
         cinemaHallService.add(firstCinemaHall);
         cinemaHallService.add(secondCinemaHall);
 
         System.out.println(cinemaHallService.getAll());
         System.out.println(cinemaHallService.get(firstCinemaHall.getId()));
 
-        // Create movie sessions
         MovieSession tomorrowMovieSession = new MovieSession();
         tomorrowMovieSession.setCinemaHall(firstCinemaHall);
         tomorrowMovieSession.setMovie(fastAndFurious);
@@ -68,6 +56,9 @@ public class Main {
         yesterdayMovieSession.setCinemaHall(firstCinemaHall);
         yesterdayMovieSession.setMovie(fastAndFurious);
         yesterdayMovieSession.setShowTime(LocalDateTime.now().minusDays(1));
+
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         movieSessionService.add(tomorrowMovieSession);
         movieSessionService.add(yesterdayMovieSession);
@@ -83,14 +74,18 @@ public class Main {
                 )
         );
 
-        // Create and save user
         User user = new User();
         user.setEmail("bob@mail.com");
         user.setPassword("1234");
 
+        UserService userService =
+                (UserService) injector.getInstance(UserService.class);
+
         userService.add(user);
 
-        // Get orders history
+        OrderService orderService =
+                (OrderService) injector.getInstance(OrderService.class);
+
         System.out.println(orderService.getOrdersHistory(user));
     }
 }
