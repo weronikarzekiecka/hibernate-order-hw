@@ -19,19 +19,18 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany (cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
+
     private LocalDateTime orderDate;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public List<Ticket> getTickets() {
@@ -56,5 +55,15 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{"
+                + "id=" + id
+                + ", tickets=" + tickets
+                + ", orderDate=" + orderDate
+                + ", user=" + user
+                + '}';
     }
 }
